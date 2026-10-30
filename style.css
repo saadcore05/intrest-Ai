@@ -1,0 +1,212 @@
+/* ==========================================================
+   Palette: flat greys + two neon accents. No gradients, no blur.
+   ========================================================== */
+:root {
+  --bg: #161616;
+  --panel: #212121;
+  --panel-2: #2b2b2b;
+  --line: #3a3a3a;
+  --text: #f1f1f1;
+  --muted: #a0a0a0;
+  --pink: #ff2e88;
+  --blue: #2ee6ff;
+
+  --display: "Dela Gothic One", "Arial Black", Impact, sans-serif;
+  --body: "Hanken Grotesk", "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html {
+  -webkit-text-size-adjust: 100%;
+  /* Bari screens par sab kuch khud bada ho jata hai (rem ke hisaab se) */
+  font-size: clamp(16px, 0.9vw + 8px, 40px);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--body);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* One big flat shape in the corner. The only decoration on the page. */
+body::before {
+  content: "";
+  position: fixed;
+  width: 70vmax;
+  height: 70vmax;
+  right: -35vmax;
+  bottom: -35vmax;
+  border-radius: 50%;
+  background: var(--panel);
+  z-index: 0;
+  pointer-events: none;
+}
+
+[hidden] { display: none !important; }
+
+h1, h2 { font-family: var(--display); font-weight: 400; line-height: 1.08; margin: 0; letter-spacing: 0.005em; }
+
+:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+
+/* ---------- Screens ---------- */
+.screen {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: max(1.25rem, env(safe-area-inset-top)) 1.25rem max(1.25rem, env(safe-area-inset-bottom));
+  display: flex;
+  justify-content: center;
+}
+.screen.is-leaving { animation: screen-out 0.45s ease-in forwards; }
+.screen.is-entering { animation: screen-in 0.55s ease-out both; }
+@keyframes screen-out { to { opacity: 0; transform: translateY(-24px); } }
+@keyframes screen-in { from { opacity: 0; transform: translateY(24px); } }
+
+/* ---------- Buttons ---------- */
+.btn {
+  font: inherit;
+  font-weight: 700;
+  border: 0;
+  border-radius: 10px;
+  padding: 0.85rem 1.4rem;
+  cursor: pointer;
+  color: #111;
+  min-height: 3rem;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.btn-pink { background: var(--pink); box-shadow: 4px 4px 0 var(--blue); }
+.btn-blue { background: var(--blue); box-shadow: 4px 4px 0 var(--pink); }
+.btn:hover { transform: translate(-1px, -1px); }
+.btn:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 var(--blue); }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+
+input[type="text"] {
+  font: inherit;
+  font-size: 1rem; /* 16px+ stops iOS from zooming on focus */
+  color: var(--text);
+  background: var(--panel);
+  border: 2px solid var(--line);
+  border-radius: 10px;
+  padding: 0.8rem 1rem;
+  min-height: 3rem;
+  min-width: 0;
+  width: 100%;
+}
+input[type="text"]::placeholder { color: #777; }
+input[type="text"]:focus { border-color: var(--blue); outline: none; }
+
+/* ==========================================================
+   1. THE LOCK
+   ========================================================== */
+#lock { align-items: center; }
+.lock-wrap { width: 100%; max-width: 30rem; }
+
+.padlock { width: 7rem; height: auto; display: block; margin-bottom: 1.75rem; overflow: visible; }
+.pl-body { fill: var(--panel-2); stroke: var(--text); stroke-width: 4; }
+.pl-shadow { fill: var(--pink); }
+.pl-shackle { fill: none; stroke: var(--blue); stroke-width: 10; stroke-linecap: butt; transition: transform 0.5s cubic-bezier(.3,1.6,.5,1); }
+.pl-key { fill: var(--blue); transition: fill 0.3s; }
+.padlock.is-open .pl-shackle { transform: translateY(-20px); }
+.padlock.is-open .pl-key { fill: var(--pink); }
+
+#lock h1 { font-size: clamp(2rem, 8.5vw, 3rem); margin-bottom: 0.75rem; }
+.lead { margin: 0 0 2rem; color: var(--muted); }
+
+#lock-question { display: block; font-weight: 700; font-size: 1.15rem; margin-bottom: 0.75rem; }
+.field-row { display: flex; gap: 0.75rem; }
+.field-row .btn { flex: none; }
+
+.msg { min-height: 1.6em; margin: 0.9rem 0 0; color: var(--pink); font-weight: 500; }
+
+.lock-wrap.is-shaking { animation: shake 0.4s; }
+@keyframes shake {
+  20% { transform: translateX(-10px); }
+  40% { transform: translateX(9px); }
+  60% { transform: translateX(-6px); }
+  80% { transform: translateX(4px); }
+}
+
+@media (max-width: 420px) {
+  .field-row { flex-direction: column; }
+  .field-row .btn { width: 100%; }
+}
+
+/* ==========================================================
+   2. THE ROAST BOT
+   ========================================================== */
+.bot-wrap {
+  width: 100%;
+  max-width: 40rem;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100dvh - 2.5rem);
+}
+
+.bot-head { display: flex; align-items: center; gap: 0.9rem; padding-bottom: 1rem; border-bottom: 2px solid var(--line); }
+.bot-head h2 { font-size: 1.5rem; }
+.bot-sub { margin: 0.15rem 0 0; color: var(--muted); font-size: 0.95rem; }
+.bot-avatar { flex: none; width: 3.25rem; height: 3.25rem; background: var(--blue); border-radius: 12px; box-shadow: 4px 4px 0 var(--pink); display: grid; place-items: center; }
+.bot-avatar svg { width: 2.1rem; height: 2.1rem; fill: #111; }
+.bot-avatar circle { fill: var(--blue); }
+
+.chat { flex: 1; overflow-y: auto; padding: 1.25rem 0.1rem; display: flex; flex-direction: column; gap: 0.85rem; scroll-behavior: smooth; }
+
+.bubble { max-width: 82%; padding: 0.75rem 1rem; border-radius: 14px; overflow-wrap: anywhere; }
+.bubble.bot { align-self: flex-start; background: var(--panel); border: 2px solid var(--blue); border-bottom-left-radius: 2px; }
+.bubble.me { align-self: flex-end; background: var(--pink); color: #111; font-weight: 500; border-bottom-right-radius: 2px; }
+
+.typing { display: inline-flex; align-items: center; gap: 0.6rem; color: var(--muted); font-size: 0.95rem; }
+.typing i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--blue); animation: hop 1s infinite ease-in-out; }
+.typing i:nth-child(3) { animation-delay: 0.15s; }
+.typing i:nth-child(4) { animation-delay: 0.3s; }
+@keyframes hop { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-6px); } }
+
+.bot-foot { display: flex; flex-direction: column; gap: 0.9rem; padding-top: 1rem; border-top: 2px solid var(--line); }
+.bot-foot #next-btn { align-self: stretch; }
+#chat-form { display: flex; gap: 0.75rem; }
+#chat-form .btn { flex: none; }
+
+/* ==========================================================
+   3. THE WISH
+   ========================================================== */
+#wish { align-items: center; text-align: center; }
+.wish-wrap { width: 100%; max-width: 62rem; display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
+
+#wish-title { font-size: clamp(2.4rem, 11vw, 5.5rem); }
+.wish-text { margin: 0; max-width: 34rem; color: var(--muted); font-size: 1.1rem; }
+
+.video-frame {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border: 3px solid var(--text);
+  border-radius: 6px;
+  box-shadow: 10px 10px 0 var(--pink);
+  position: relative;
+  margin: 0.5rem 0 0.75rem;
+}
+.video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.video-frame.is-empty::after {
+  content: "Yahan video aayegi. script.js mein YOUTUBE_ID daalo.";
+  position: absolute; inset: 0; display: grid; place-items: center; padding: 1rem;
+  color: var(--blue); font-weight: 700;
+}
+
+.wish-sign { margin: 0; color: var(--blue); font-weight: 700; }
+
+@media (max-width: 600px) {
+  .video-frame { box-shadow: 6px 6px 0 var(--pink); }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}

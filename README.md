@@ -1,3 +1,3 @@
 ﻿# intrest-Ai
 An Ai which is maked for one person that is Hifza arif. wishing her happy birthday. 
-website link: https://saadcore05.github.io/intrest-Ai/
+

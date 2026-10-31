@@ -100,7 +100,7 @@ const CONFIG = {
       answer: "Treat aur gift Madam g ka haq hai. Saad ki jeb ka koi zikar nahi." },
     { keys: ["birthday wish", "wish", "mubarak", "dua", "congrats", "happy", "birthday", "bday", "happy birthday", "hb", "hb madam", "hb hifza", "hb hifza arif", "hb madam g", "hb madam prime minister", "hb madam pm", "hb zulaikan massi", "hb zulaikha massi", "hb zulaikan", "hb zulaikha", "hb massi", "hb aunty", "hb aunty g", "hb aunty madam", "hb aunty madam g", "hb aunty madam prime minister", "hb aunty madam pm", "hb aunty zulaikan massi", "hb aunty zulaikha massi"],
       answer: "Happy Birthday Madam! Agla page dekhne ke liye Next dabao." },
-{ keys: ["boss", "leader", "queen", "malika", "rani", "princess", "hifza", "arif", "hifza arif", "madam g", "madam prime minister", "madam pm", "zulaikan massi", "zulaikha massi", "zulaikan", "zulaikha", "massi", "aunty", "arif uncle ki princess", "arif uncle ki beti", "arif uncle ki beti hifza", "arif uncle ki beti hifza arif", "arif uncle ki beti madam g", "arif uncle ki beti madam prime minister", "arif uncle ki beti madam pm", "arif uncle ki beti zulaikan massi", "arif uncle ki beti zulaikha massi"],
+    { keys: ["boss", "leader", "queen", "malika", "rani", "princess", "hifza", "arif", "hifza arif", "madam g", "madam prime minister", "madam pm", "zulaikan massi", "zulaikha massi", "zulaikan", "zulaikha", "massi", "aunty", "arif uncle ki princess", "arif uncle ki beti", "arif uncle ki beti hifza", "arif uncle ki beti hifza arif", "arif uncle ki beti madam g", "arif uncle ki beti madam prime minister", "arif uncle ki beti madam pm", "arif uncle ki beti zulaikan massi", "arif uncle ki beti zulaikha massi"],
       answer: "Boss, leader aur queen: Hifza Arif, arif uncle ki princess." },
   ],
 
@@ -121,7 +121,7 @@ const CONFIG = {
 
   // The part after "watch?v=" in your unlisted YouTube link.
   // Example: https://www.youtube.com/watch?v=dQw4w9WgXcQ  ->  "dQw4w9WgXcQ"
-  YOUTUBE_ID: "YOUR_VIDEO_ID",
+  YOUTUBE_ID: "f8DbcHtY9U0",
 };
 
 /* ==========================================================
@@ -251,7 +251,8 @@ const CONFIG = {
     const words = text.split(" ");
     let best = null, top = 0;
     CONFIG.FACTS.forEach((f) => {
-      const score = f.keys.filter((k) => fuzzyHas(words, text, k)).length;
+      // k.toLowerCase(): keys mein capital letters hon (jaise "Where") tab bhi match ho
+      const score = f.keys.filter((k) => fuzzyHas(words, text, k.toLowerCase())).length;
       if (score > top) { top = score; best = f; }
     });
     return best ? best.answer : nextRoast();
